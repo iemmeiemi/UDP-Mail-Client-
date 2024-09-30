@@ -10,6 +10,7 @@ import static com.mycompany.udpsocketclient.UDPSocketClient.send;
 import java.awt.CardLayout;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -279,8 +280,24 @@ public class ClientUI extends javax.swing.JFrame {
         String email = tfEmail.getText();
         String username = tfUsername.getText();
         String pass = new String(passfieldreg.getPassword());
+         Account acc = new Account (email, username, pass);
+         Request req = new Request("register", acc);
+         send(req, clientSocket, serverAddress);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void showDialog(String title, String content) {
+        JOptionPane.showMessageDialog(this, "Title: " + title + "\nContent: " + content);
+    }
+    
+    public void registerResponse(Boolean status) {
+        if(status) {
+            showDialog("Register", "Successfully!");
+            
+        } else {
+            showDialog("Register", "Failed!");
+
+        }
+    }
     /**
      * @param args the command line arguments
      */

@@ -32,11 +32,11 @@ public class UDPSocketClient {
             });
              int i=0;
             while(true) {
-                    if(i==0) {
-                        Account acc = new Account ("duoinuicholantu6x9@gmail.com", "1306");
-                        Request request = new Request ("login", acc);
-                        send(request, clientSocket, serverAddress);
-                    }
+//                    if(i==0) {
+//                        Account acc = new Account ("duoinuicholantu6x9@gmail.com", "1306");
+//                        Request request = new Request ("login", acc);
+//                        send(request, clientSocket, serverAddress);
+//                    }
                 
                     byte[] receiveData = new byte[1024];
                     //Nhận dữ liệu từ máy chủ
@@ -94,11 +94,9 @@ public class UDPSocketClient {
             } 
             
             case "register" ->  {
-                if((Boolean) req.getData()) {
-                    System.err.println("done");
-                } else {
-                    System.err.println("notdone");
-                }
+                 SwingUtilities.invokeLater(() -> {
+                        loginFrame.registerResponse((Boolean) req.getData());
+                });
                 break;
             }
             
