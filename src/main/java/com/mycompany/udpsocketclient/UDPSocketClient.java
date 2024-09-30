@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 public class UDPSocketClient {
+    
     private static ClientUI loginFrame;
     private static HomeUI home;
     public static void main(String args[])  {
@@ -29,10 +30,10 @@ public class UDPSocketClient {
                 loginFrame = new ClientUI(clientSocket, serverAddress);
                 loginFrame.setVisible(true);// Truyền socket vào MainFrame
             });
-             //int i=0;
+             int i=0;
             while(true) {
 //                    if(i==0) {
-//                        Account acc = new Account ("abc@gmail.com", "1306");
+//                        Account acc = new Account ("duoinuicholantu6x9@gmail.com", "1306");
 //                        Request request = new Request ("login", acc);
 //                        send(request, clientSocket, serverAddress);
 //                    }
@@ -47,7 +48,7 @@ public class UDPSocketClient {
                     Request req = (Request) ois.readObject();
                     System.out.println("Nhận được phản hồi: " + req.getMessage());
                     process(req, clientSocket, serverAddress);
-                   //i++;
+                   i++;
             }
             
         } catch (UnknownHostException ex) {
@@ -131,23 +132,22 @@ public class UDPSocketClient {
             
             case "mail/send" -> {
                 Boolean status = (Boolean) req.getData();
-                if(status) {
-                    System.err.println("done");
-                } else {
-                    System.err.println("notdone");
-                }
+                SwingUtilities.invokeLater(() -> {
+                     home.sendMailResponse(status);
+                });
             }
             
             case "mail/get" -> {
                 System.err.println("get");
-                ArrayList<byte[]> files = (ArrayList<byte[]>) req.getData();
-                readContentFromBytes(files.get(0));
-                if(files.size()==2) {
-                    readContentFromBytes(files.get(1));
-                }
-                Mail mail = new Mail("Hi bro!", "hello, Iam Mai, nice to meet you", "abc@gmail.com", "hello@gmail.com");
-                Request myObject = new Request("mail/send", mail);
-                send( myObject, clientSocket, serverAddress);
+                ArrayList<Mail> files = (ArrayList<Mail>) req.getData();
+                ArrayList<Mail> mails = convertToMail(files);
+                SwingUtilities.invokeLater(() -> {
+                     home.setList(mails);
+                     
+                });
+//                Mail mail = new Mail("Hi bro!", "hello, Iam Mai, nice to meet you", "abc@gmail.com", "hello@gmail.com");
+//                Request myObject = new Request("mail/send", mail);
+//                send( myObject, clientSocket, serverAddress);
             }
             
             case "mail/reload" -> {
@@ -165,8 +165,8 @@ public class UDPSocketClient {
     }
     
     
-    public static void readContentFromBytes(byte[] data) {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(data);
+    public static void readContentFromBytes(byte[] bytes) {
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
              InputStreamReader isr = new InputStreamReader(bais);
              BufferedReader br = new BufferedReader(isr)) {
 
@@ -179,4 +179,27 @@ public class UDPSocketClient {
             e.printStackTrace();
         }
     }
+    
+    public static ArrayList<Mail> convertToMail(ArrayList<Mail> mails) {
+        ArrayList<Mail> list  = new ArrayList<>();
+        for (Mail m: mails) {
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(m.getByteContent());
+                InputStreamReader isr = new InputStreamReader(bais);
+                BufferedReader br = new BufferedReader(isr)) {
+
+                String line;
+                String content = "";
+                while ((line = br.readLine()) != null) {
+                    content = line + "\n" + line;
+                }
+                list.add(new Mail(m.getTitle(), content));
+            } catch (IOException e) {
+                System.err.println("Error reading from byte array.");
+                e.printStackTrace();
+            }
+        }
+        
+        return list;
+    }
+    
 }

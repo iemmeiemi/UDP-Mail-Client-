@@ -18,6 +18,7 @@ public class Mail implements Serializable{
     private String path;
     private String title;
     private String content;
+    private byte[] byteContent;
     private String emailSend;
     private String emailReceive;
     private Timestamp sendedAt;
@@ -32,11 +33,23 @@ public class Mail implements Serializable{
         this.sendedAt = sendedAt;
     }
 
+    public Mail(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    
+    
     public Mail(String title, String content, String emailSend, String emailReceive) {
         this.title = title;
         this.content = content;
         this.emailSend = emailSend;
         this.emailReceive = emailReceive;
+    }
+
+    public Mail(String title, byte[] byteContent) {
+        this.title = title;
+        this.byteContent = byteContent;
     }
 
     public Mail(Integer ID, String path, String emailSend, String emailReceive, Timestamp sendedAt) {
@@ -102,8 +115,14 @@ public class Mail implements Serializable{
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    
+
+    public byte[] getByteContent() {
+        return byteContent;
+    }
+
+    public void setByteContent(byte[] byteContent) {
+        this.byteContent = byteContent;
+    }
     
     
 }
