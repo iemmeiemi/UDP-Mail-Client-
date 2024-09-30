@@ -189,7 +189,7 @@ public class HomeUI extends javax.swing.JFrame {
 
         pnHome.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(pnHome, "card2");
+        getContentPane().add(pnHome, "home");
 
         pnSend.setLayout(new java.awt.BorderLayout());
 
@@ -211,6 +211,11 @@ public class HomeUI extends javax.swing.JFrame {
         jPanel6.add(btnHomeSend1);
 
         btnHomeProfile1.setText("PROFILE");
+        btnHomeProfile1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeProfile1ActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnHomeProfile1);
 
         pnSend.add(jPanel6, java.awt.BorderLayout.PAGE_END);
@@ -444,6 +449,10 @@ public class HomeUI extends javax.swing.JFrame {
         ((CardLayout)getContentPane().getLayout()).show(getContentPane(), "home");
 
     }//GEN-LAST:event_btnHomeHome1ActionPerformed
+
+    private void btnHomeProfile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeProfile1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHomeProfile1ActionPerformed
 
     /**
      * @param args the command line arguments

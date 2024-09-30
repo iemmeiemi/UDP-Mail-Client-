@@ -31,7 +31,7 @@
     <Container class="javax.swing.JPanel" name="pnHome">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="card2"/>
+          <CardConstraints cardName="home"/>
         </Constraint>
       </Constraints>
 
@@ -195,6 +195,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="PROFILE"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHomeProfile1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
