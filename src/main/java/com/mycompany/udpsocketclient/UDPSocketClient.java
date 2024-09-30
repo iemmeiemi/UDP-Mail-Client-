@@ -188,11 +188,11 @@ public class UDPSocketClient {
                 BufferedReader br = new BufferedReader(isr)) {
 
                 String line;
-                String content = "";
+                StringBuilder content = new StringBuilder();
                 while ((line = br.readLine()) != null) {
-                    content = line + "\n" + line;
+                    content.append(line).append("\n");
                 }
-                list.add(new Mail(m.getTitle(), content));
+                list.add(new Mail(m.getTitle(), content.toString()));
             } catch (IOException e) {
                 System.err.println("Error reading from byte array.");
                 e.printStackTrace();
