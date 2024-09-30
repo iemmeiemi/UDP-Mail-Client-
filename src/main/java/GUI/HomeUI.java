@@ -14,6 +14,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -393,7 +394,7 @@ public class HomeUI extends javax.swing.JFrame {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         // TODO add your handling code here:
-        String content = tfSendMail.getText();
+        String content = "Sent at: "+ new Date() +"\n" + tfSendMail.getText();
         String title = tfTitle.getText();
         String receiver = tfReceiver.getText();
         Mail m = new Mail(title, content, acc.getEmail(), receiver);
